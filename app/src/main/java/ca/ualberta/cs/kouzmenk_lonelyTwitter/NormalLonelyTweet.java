@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
-public class NormalLonelyTweet implements Serializable {
+public class NormalLonelyTweet extends LTSuperClass implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	protected Date tweetDate;
@@ -14,48 +14,38 @@ public class NormalLonelyTweet implements Serializable {
 	}
 
 	public NormalLonelyTweet(String text, Date date) {
-		this.tweetDate = date;
-		this.tweetBody = text;
+		super(text, date);
 	}
 
-	public Date getTweetDate() {
+	public Date getDate() {
 		return tweetDate;
 	}
 
-	public void setTweetDate(Date tweetDate) {
+	public void setDate(Date tweetDate) {
 		this.tweetDate = tweetDate;
 	}
 
-	public String getTweetBody() {
+	public String getBody() {
 		return tweetBody;
 	}
 
-	public void setTweetBody(String tweetBody) {
+	public void setBody(String tweetBody) {
 		this.tweetBody = tweetBody;
 	}
 
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+	private void writeObjectToStream(java.io.ObjectOutputStream out) throws IOException {
 		out.writeObject(tweetDate);
 		out.writeObject(tweetBody);
 	}
 
-	private void readObject(java.io.ObjectInputStream in) throws IOException,
+	private void readObjectFromStream(java.io.ObjectInputStream in) throws IOException,
 			ClassNotFoundException {
 		tweetDate = (Date) in.readObject();
 		tweetBody = (String) in.readObject();
 	}
 
-	public boolean isValid() {
-		if (tweetBody.trim().length() == 0
-				|| tweetBody.trim().length() > 10) {
-			return false;
-		}
-
-		return true;
-	}
-
 	@Override
 	public String toString() {
-		return getTweetDate() + " | " + getTweetBody() ;
+		return getDate() + " | " + getBody() ;
 	}
 }
